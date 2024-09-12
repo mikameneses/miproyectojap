@@ -1,5 +1,16 @@
-const url = "https://japceibal.github.io/emercado-api/cats_products/101.json";
-
+//const url = "https://japceibal.github.io/emercado-api/cats_products/101.json";
+// cambiamos el url anterior para que sirva para todos entrega 3 
+document.addEventListener('DOMContentLoaded', () => {
+       const categoryId = localStorage.getItem('selectedCategoryId');
+       const apiUrl = `https://japceibal.github.io/emercado-api/cats_products/${categoryId}.json`;
+   
+       fetch(apiUrl)
+           .then(response => response.json())
+           .then(data => {
+               // Código para mostrar los productos en la página
+           })
+           .catch(error => console.error('Error fetching products:', error));
+   });
 // Función que se ejecuta una vez que toda la página ha sido cargada.
 window.onload = function() {
 
