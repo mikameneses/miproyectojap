@@ -44,4 +44,9 @@ window.onload = function() {
             document.getElementById('products-container').innerText = 'Error fetching data';
         }
     });
+   //guarde el id de la categoria en el almacenamiento. entrega 3 parte 1 
+    localStorage.setItem('selectedCategoryId', categoryId);
+   window.location.href = 'products.html';
+    ⁠
+
 }
