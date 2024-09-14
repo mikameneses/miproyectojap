@@ -1,4 +1,4 @@
-ocument.addEventListener('DOMContentLoaded', () => {
+Document.addEventListener('DOMContentLoaded', () => {
     // Obtener el ID del producto guardado en localStorage
     const productId = localStorage.getItem('product-id');
 
