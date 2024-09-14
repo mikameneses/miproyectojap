@@ -85,3 +85,4 @@ function renderProducts(productsList) {
         container.appendChild(productDiv);
     });
 }
+
