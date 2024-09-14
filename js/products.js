@@ -4,7 +4,7 @@
 
     // Comprueba que tienes un catID válido
     if (categoriaId) {
-        // Construye la URL usando comillas invertidas para la interpolación
+        // Construye la URL
         const url = `https://japceibal.github.io/emercado-api/cats_products/${categoriaId}.json`;
 
 
