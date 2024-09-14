@@ -79,4 +79,9 @@ function renderProducts(productsList) {
         // Añadimos el div de producto creado al contenedor principal en el DOM.
         container.appendChild(productDiv);
     });
+    function selectProduct(productId) {
+    localStorage.setItem("productID", productId); // Guarda el ID del producto en localStorage
+    window.location.href = "product-info.html"; // Redirige a product-info.html
+}
+
 }
