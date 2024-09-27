@@ -42,6 +42,37 @@ document.addEventListener('DOMContentLoaded', () => {
             .catch(error => {
                 console.error('Error al obtener los datos del producto:', error);
             });
+          // *** Mostrar productos relacionados ***
+                const relatedContainer = document.getElementById('related-products-container');
+                relatedContainer.innerHTML = ''; // Limpiar productos relacionados previos
+
+                producto.relatedProducts.forEach(relatedId => {
+                    // Realizar una solicitud fetch para obtener el producto relacionado
+                    fetch(`https://japceibal.github.io/emercado-api/products/${relatedId}.json`)
+                        .then(response => response.json())
+                        .then(relatedProduct => {
+                            const relatedProductElement = document.createElement('div');
+                            relatedProductElement.classList.add('col-md-4');
+                            relatedProductElement.innerHTML = `
+                                <div class="card">
+                                    <img src="${relatedProduct.images[0]}" class="card-img-top" alt="${relatedProduct.name}">
+                                    <div class="card-body">
+                                        <h5 class="card-title">${relatedProduct.name}</h5>
+                                        <button class="btn btn-primary" onclick="loadProduct(${relatedProduct.id})">Ver producto</button>
+                                    </div>
+                                </div>
+                            `;
+                            relatedContainer.appendChild(relatedProductElement);
+                        })
+                        .catch(error => {
+                            console.error('Error al obtener el producto relacionado:', error);
+                        });
+                });
+            })
+            .catch(error => {
+                console.error('Error al obtener los datos del producto:', error);
+            });
+
  // Solicitud para obtener los comentarios del producto
         fetch(commentsApiUrl)
             .then(response => response.json())
@@ -70,3 +101,8 @@ document.addEventListener('DOMContentLoaded', () => {
         console.error('Producto no encontrado en localStorage');
     }
 });
+// Función para redirigir al producto seleccionado
+function loadProduct(productId) {
+    localStorage.setItem('id', productId);  // Guarda el nuevo ID en localStorage
+    window.location.href = 'product-info.html';  // Recarga la página con el nuevo producto
+}
