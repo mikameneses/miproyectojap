@@ -1,9 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Obtener el ID del producto guardado en localStorage
     const productId = localStorage.getItem('id');
 
     if (productId) {
-        // Dirección de la API
         const apiUrl = `https://japceibal.github.io/emercado-api/products/${productId}.json`;
         const commentsApiUrl = `https://japceibal.github.io/emercado-api/products_comments/${productId}.json`;
 
@@ -11,8 +9,6 @@ document.addEventListener('DOMContentLoaded', () => {
         fetch(apiUrl)
             .then(response => response.json())
             .then(producto => {
-                // Aquí accedemos al producto que está dentro de la propiedad "products" del JSON
-
                 // Actualizar los detalles del producto en la página
                 document.getElementById('product-name').textContent = producto.name;
                 document.getElementById('category').textContent = `Categoría: ${producto.category}`;
@@ -21,28 +17,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 // Actualizar la imagen principal
                 const mainImage = document.querySelector('.main-image img');
-                mainImage.src = producto.images[0]; // Primera imagen como imagen principal
+                mainImage.src = producto.images[0];
 
                 // Limpiar cualquier miniatura anterior
                 const thumbnailsContainer = document.querySelector('.product-images');
-                thumbnailsContainer.innerHTML = ''; // Limpiar las miniaturas previas
+                thumbnailsContainer.innerHTML = '';
 
-                // Generar dinámicamente las miniaturas
+                // Generar miniaturas
                 producto.images.forEach((imagen, index) => {
                     const imgElement = document.createElement('img');
                     imgElement.src = imagen;
                     imgElement.alt = `Imagen miniatura ${index + 1}`;
                     imgElement.addEventListener('click', () => {
-                        // Cambiar la imagen principal al hacer clic en la miniatura
                         mainImage.src = imagen;
                     });
                     thumbnailsContainer.appendChild(imgElement);
                 });
-            })
-            .catch(error => {
-                console.error('Error al obtener los datos del producto:', error);
-            });
-          // *** Mostrar productos relacionados ***
+
+                // *** Mostrar productos relacionados ***
                 const relatedContainer = document.getElementById('related-products-container');
                 relatedContainer.innerHTML = ''; // Limpiar productos relacionados previos
 
@@ -73,7 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.error('Error al obtener los datos del producto:', error);
             });
 
- // Solicitud para obtener los comentarios del producto
+        // Solicitud para obtener los comentarios del producto
         fetch(commentsApiUrl)
             .then(response => response.json())
             .then(comentarios => {
@@ -83,14 +75,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 comentarios.forEach(comentario => {
                     const commentElement = document.createElement('div');
                     commentElement.classList.add('comment');
-
                     commentElement.innerHTML = `
                         <p><strong>Usuario:</strong> ${comentario.user}</p>
                         <p><strong>Calificación:</strong> ${comentario.score} estrellas</p>
                         <p><strong>Comentario:</strong> ${comentario.description}</p>
                         <p><strong>Fecha:</strong> ${comentario.dateTime}</p>
                     `;
-
                     commentsContainer.appendChild(commentElement);
                 });
             })
@@ -101,6 +91,7 @@ document.addEventListener('DOMContentLoaded', () => {
         console.error('Producto no encontrado en localStorage');
     }
 });
+
 // Función para redirigir al producto seleccionado
 function loadProduct(productId) {
     localStorage.setItem('id', productId);  // Guarda el nuevo ID en localStorage
